@@ -744,13 +744,9 @@ class McDVoiceSurvey:
         """Responde preguntas abiertas en campos textarea escribiendo letra por letra, simulando escritura humana."""
         try:
             textareas = self.driver.find_elements(By.XPATH, "//textarea[not(@disabled) and not(contains(@class, 'hidden'))]")
-            respuestas = [
-                "Me encantó la atención del personal, fueron muy amables.",
-                "La comida estuvo deliciosa y el local muy limpio.",
-                "El servicio fue rápido y eficiente, volveré pronto.",
-                "Todo estuvo perfecto, muchas gracias.",
-                "Excelente experiencia, felicidades al equipo."
-            ]
+            # Leer respuestas desde un archivo de texto
+            with open("respuestas.txt", "r", encoding="utf-8") as f:
+                respuestas = [line.strip() for line in f if line.strip()]
             for textarea in textareas:
                 if textarea.is_displayed() and textarea.is_enabled():
                     comentario = random.choice(respuestas)
@@ -887,4 +883,5 @@ class McDVoiceSurvey:
 if __name__ == "__main__":
     survey = McDVoiceSurvey()
     survey.run_survey()
+
 
